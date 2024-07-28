@@ -1,0 +1,21 @@
+{
+  "name": "tw_rest_backend",
+  "version": "1.0.5",
+  "description": "a server from tawssilat rest app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node api/index",
+    "dev": "nodemon api/index.js"
+  },
+  "author": "RH",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
