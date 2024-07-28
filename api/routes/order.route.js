@@ -13,10 +13,19 @@ orderRoute.get('/my/:id', async (req, res) => {
     }
 })
 
+orderRoute.get('/', async (req, res) => {
+    try {
+        const myorder = await Order.find()
+        res.send({ good: true, result: myorder, message: "ok" })
+    } catch (error) {
+        res.send({ good: false, message: error.message })
+    }
+})
+
 orderRoute.get('/liv', async (req, res) => {
     try {
-        const myorder = await Order.find({ restaurantOK })
-        res.send({ good: true, result: myorder, message: "ok" })
+        const myorder = await Order.find({ LivrorShow: true })
+        res.send({ good: true, length: myorder.length, result: myorder, message: "ok" })
     } catch (error) {
         res.send({ good: false, message: error.message })
     }
@@ -38,6 +47,7 @@ orderRoute.post('/', async (req, res) => {
         const myorder = await Order.create(body)
         res.send({ good: true, result: myorder, message: "ok" })
         console.log(myorder._id);
+        OrderStepOne(myorder._id)
     } catch (error) {
         res, send({ good: false, message: error.message })
     }
@@ -52,3 +62,5 @@ orderRoute.delete('/:id', async (req, res) => {
         res, send({ good: false, message: error.message })
     }
 })
+
+module.exports = orderRoute

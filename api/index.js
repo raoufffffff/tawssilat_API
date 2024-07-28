@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const foodRoute = require('./routes/food.route');
 const snakRoute = require('./routes/snak.route');
 const restaurantRoute = require('./routes/Restaurant.route');
+const orderRoute = require('./routes/order.route');
 
 const app = express()
 app.use(cors());
@@ -11,6 +12,7 @@ app.use(express.json())
 app.use('/food', foodRoute)
 app.use('/snak', snakRoute)
 app.use('/restaurant', restaurantRoute)
+app.use('/order', orderRoute)
 
 
 app.get('/', (req, res) => {
@@ -21,10 +23,10 @@ app.get('/', (req, res) => {
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
 
-
+const MongoDbKey = "mongodb+srv://raouf:rabah@cluster0.ayejlxj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 mongoose
-    .connect('mongodb+srv://raouf:rabah@cluster0.ayejlxj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+    .connect(MongoDbKey)
     .then(() => {
         console.log("mriglla")
 

@@ -1,46 +1,45 @@
 const Order = require("../models/order.model")
 
-const OrderStepOne = async (req, res, next) => {
-    let { body } = req
-    body.restaurantOK = false
-    body.livrorOK = false
-    body.about = {
-        complate: false,
-        restaurantCancel: false,
-        livrorCancel: false,
-        userCancel: false
-    }
-    body.serverCancel = false
-
+const OrderStepOne = async (id) => {
+    console.log('we are good to go');
     try {
-        const myorder = await Order.create(body)
-        res.send({ good: true, result: myorder, message: "ok" })
-        next()
+        let myorder = await Order.findById(id)
+        setTimeout(async () => {
+            if (myorder.LivrorShow) {
+                return
+            } else {
+                myorder.LivrorShow = true
+                try {
+                    await Order.findByIdAndUpdate(id, myorder)
+                    OrderStepTwo(id)
+                } catch (error) {
+                    console.error("Error updating orders:", error);
+                }
+            }
+        }, 15000);
     } catch (error) {
         res, send({ good: false, message: error.message })
     }
 }
 
-const OrderStepTwo = async (req, res, next) => {
+const OrderStepTwo = async (id) => {
+    console.log('ok done');
     try {
-        let result = await Order.find();
+        let myorder = await Order.findById(id)
         setTimeout(async () => {
-            let tenMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
-            let oldorder = result.filter(e => new Date(e.createdAt) < tenMinutesAgo);
-
-            const ServerCancel = async () => {
+            if (myorder.livrorOK) {
+                return
+            } else {
+                myorder.serverCancel = true
+                myorder.LivrorShow = false
                 try {
-                    for (let e of oldorder) {
-                        await Order.findByIdAndUpdate(e._id, { restaurantOK: true });
-                    }
-                } catch (e) {
-                    console.error("Error updating orders:", e);
+                    await Order.findByIdAndUpdate(id, myorder)
+                    console.log("done");
+                } catch (error) {
+                    console.error("Error updating orders:", error);
                 }
-            };
-
-            await ServerCancel();
-            next()
-        }, 300000);
+            }
+        }, 10000);
     } catch (e) {
         console.error("Error finding orders:", e);
     }
