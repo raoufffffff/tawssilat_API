@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
 
-const MongoDbKey = "mongodb+srv://raouf:rabah@cluster0.ayejlxj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+ngodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 mongoose
     .connect(MongoDbKey)
