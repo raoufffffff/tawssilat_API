@@ -5,6 +5,7 @@ const rest = new mongoose.Schema({
     phone: String,
     bg: String,
     logo: String,
+    email: String,
     location: {
         "latitude": Number,
         "longitude": Number
