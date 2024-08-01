@@ -12,6 +12,7 @@ const rest = new mongoose.Schema({
     },
     cancelOrders: Number,
     open: Boolean,
+    not: String,
     password: String,
     orders: Number,
     city: String,
