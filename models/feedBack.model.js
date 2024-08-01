@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const feedback = new mongoose.Schema({
     by: String,
     type: String,
-    body: Number,
+    body: String,
     createdAt: {
         type: Date,
         default: Date.now,
