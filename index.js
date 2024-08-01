@@ -6,6 +6,7 @@ const snakRoute = require('./routes/snak.route');
 const restaurantRoute = require('./routes/Restaurant.route');
 const orderRoute = require('./routes/order.route');
 const AuthRest = require('./auth/rest.auth');
+const FeedBackRoute = require('./routes/feedBack.route');
 
 const app = express()
 app.use(cors());
@@ -15,6 +16,7 @@ app.use('/snak', snakRoute)
 app.use('/restaurant', restaurantRoute)
 app.use('/order', orderRoute)
 app.use('/authrest', AuthRest)
+app.use('/feedback', FeedBackRoute)
 
 
 app.get('/', (req, res) => {
