@@ -10,6 +10,7 @@ const food = new mongoose.Schema({
     type: String,
     price: Number,
     newPrice: Number,
+    out: Boolean
 })
 
 

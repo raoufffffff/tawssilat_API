@@ -12,6 +12,7 @@ foodRoute.get('/:id', async (req, res) => {
     }
 })
 
+
 foodRoute.post('/:id', async (req, res) => {
     const { id } = req.params
     let { body } = req
@@ -32,6 +33,26 @@ foodRoute.put('/:id', async (req, res) => {
     let { body } = req
     try {
         const myfood = await Food.findByIdAndUpdate(id, body)
+        res.send({ good: true, result: myfood, message: 'ok' })
+    } catch (error) {
+        res.status(404).send({ message: error.message, good: false })
+    }
+})
+
+foodRoute.put('/out/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const myfood = await Food.findByIdAndUpdate(id, { out: true })
+        res.send({ good: true, result: myfood, message: 'ok' })
+    } catch (error) {
+        res.status(404).send({ message: error.message, good: false })
+    }
+})
+
+foodRoute.put('/in/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const myfood = await Food.findByIdAndUpdate(id, { out: false })
         res.send({ good: true, result: myfood, message: 'ok' })
     } catch (error) {
         res.status(404).send({ message: error.message, good: false })
