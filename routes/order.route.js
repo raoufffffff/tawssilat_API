@@ -6,8 +6,9 @@ const orderRoute = experss.Router()
 orderRoute.get('/my/:id', async (req, res) => {
     const { id } = req.params
     try {
-        const myorder = await Order.find({ restaurantid: id })
-        res.send({ good: true, result: myorder, message: "ok" })
+        let myorder = await Order.find({ restaurantid: id })
+        let result = myorder.filter(e => !e.cancel)
+        res.send({ good: true, result: result, message: "ok" })
     } catch (error) {
         res.send({ good: false, message: error.message })
     }
@@ -42,7 +43,7 @@ orderRoute.post('/', async (req, res) => {
         userCancel: false
     }
     body.serverCancel = false
-
+    body.cancel = false
     try {
         const myorder = await Order.create(body)
         res.send({ good: true, result: myorder, message: "ok" })
@@ -57,6 +58,38 @@ orderRoute.delete('/:id', async (req, res) => {
     const { id } = req.params
     try {
         const myorder = await Order.findByIdAndDelete(id)
+        res.send({ good: true, result: myorder, message: "ok" })
+    } catch (error) {
+        res, send({ good: false, message: error.message })
+    }
+})
+
+orderRoute.delete('/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const myorder = await Order.findByIdAndDelete(id)
+        res.send({ good: true, result: myorder, message: "ok" })
+    } catch (error) {
+        res, send({ good: false, message: error.message })
+    }
+})
+
+
+orderRoute.put('/acc/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const myorder = await Order.findByIdAndUpdate(id, { restaurantOK: true })
+        res.send({ good: true, result: myorder, message: "ok" })
+    } catch (error) {
+        res, send({ good: false, message: error.message })
+    }
+})
+
+orderRoute.put('/ref/:id', async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const myorder = await Order.findByIdAndUpdate(id, { cancel: true })
         res.send({ good: true, result: myorder, message: "ok" })
     } catch (error) {
         res, send({ good: false, message: error.message })

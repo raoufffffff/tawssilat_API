@@ -16,7 +16,7 @@ const OrderStepOne = async (id) => {
                     console.error("Error updating orders:", error);
                 }
             }
-        }, 15000);
+        }, 360000);
     } catch (error) {
         res, send({ good: false, message: error.message })
     }
@@ -39,7 +39,7 @@ const OrderStepTwo = async (id) => {
                     console.error("Error updating orders:", error);
                 }
             }
-        }, 10000);
+        }, 360000);
     } catch (e) {
         console.error("Error finding orders:", e);
     }

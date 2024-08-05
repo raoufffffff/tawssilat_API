@@ -32,6 +32,7 @@ const order = new mongoose.Schema({
     restaurantOK: Boolean,
     livrorOK: Boolean,
     LivrorShow: Boolean,
+    cancel: Boolean,
     createdAt: {
         type: Date,
         default: Date.now,
