@@ -1,19 +1,19 @@
 const mongoose = require('mongoose')
 
 const order = new mongoose.Schema({
+    userid: String,
+    restaurantid: String,
     user: {
         name: String,
         location: {},
         phone: String,
 
     },
-    userid: String,
     restaurant: {
         name: String,
         location: {},
         phone: String,
     },
-    restaurantid: String,
     price: Number,
     ride: Number,
     items: [],
@@ -22,14 +22,11 @@ const order = new mongoose.Schema({
         phone: String,
         id: String
     },
-    about: {
-        complate: Boolean,
-        restaurantCancel: Boolean,
-        livrorCancel: Boolean,
-        userCancel: Boolean
-    },
-    serverCancel: Boolean,
+    whoCancel: String,
+    whyCancel: String,
+    complate: Boolean,
     restaurantOK: Boolean,
+    livrorTake: Boolean,
     livrorOK: Boolean,
     LivrorShow: Boolean,
     cancel: Boolean,

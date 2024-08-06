@@ -14,6 +14,16 @@ orderRoute.get('/my/:id', async (req, res) => {
     }
 })
 
+orderRoute.get('/myall/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        let myorder = await Order.find({ restaurantid: id })
+        res.send({ good: true, result: myorder, message: "ok" })
+    } catch (error) {
+        res.send({ good: false, message: error.message })
+    }
+})
+
 orderRoute.get('/', async (req, res) => {
     try {
         const myorder = await Order.find()
@@ -23,14 +33,14 @@ orderRoute.get('/', async (req, res) => {
     }
 })
 
-orderRoute.get('/liv', async (req, res) => {
-    try {
-        const myorder = await Order.find({ LivrorShow: true })
-        res.send({ good: true, length: myorder.length, result: myorder, message: "ok" })
-    } catch (error) {
-        res.send({ good: false, message: error.message })
-    }
-})
+// orderRoute.get('/liv', async (req, res) => {
+//     try {
+//         const myorder = await Order.find({ LivrorShow: true })
+//         res.send({ good: true, length: myorder.length, result: myorder, message: "ok" })
+//     } catch (error) {
+//         res.send({ good: false, message: error.message })
+//     }
+// })
 
 orderRoute.post('/', async (req, res) => {
     let { body } = req
@@ -50,7 +60,7 @@ orderRoute.post('/', async (req, res) => {
         console.log(myorder._id);
         OrderStepOne(myorder._id)
     } catch (error) {
-        res, send({ good: false, message: error.message })
+        res.send({ good: false, message: error.message })
     }
 })
 
@@ -60,39 +70,51 @@ orderRoute.delete('/:id', async (req, res) => {
         const myorder = await Order.findByIdAndDelete(id)
         res.send({ good: true, result: myorder, message: "ok" })
     } catch (error) {
-        res, send({ good: false, message: error.message })
+        res.send({ good: false, message: error.message })
     }
 })
 
-orderRoute.delete('/:id', async (req, res) => {
-    const { id } = req.params
-    try {
-        const myorder = await Order.findByIdAndDelete(id)
-        res.send({ good: true, result: myorder, message: "ok" })
-    } catch (error) {
-        res, send({ good: false, message: error.message })
-    }
-})
+// orderRoute.delete('/:id', async (req, res) => {
+//     const { id } = req.params
+//     try {
+//         const myorder = await Order.findByIdAndDelete(id)
+//         res.send({ good: true, result: myorder, message: "ok" })
+//     } catch (error) {
+//         res, send({ good: false, message: error.message })
+//     }
+// })
 
 
 orderRoute.put('/acc/:id', async (req, res) => {
     const { id } = req.params
     try {
-        const myorder = await Order.findByIdAndUpdate(id, { restaurantOK: true })
+        const myorder = await Order.findByIdAndUpdate(id, { restaurantOK: true, LivrorShow: true })
         res.send({ good: true, result: myorder, message: "ok" })
     } catch (error) {
-        res, send({ good: false, message: error.message })
+        res.send({ good: false, message: error.message })
+    }
+})
+
+orderRoute.put('/done/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const myorder = await Order.findByIdAndUpdate(id, { livrorTake: true })
+        res.send({ good: true, result: myorder, message: "ok" })
+    } catch (error) {
+        res.send({ good: false, message: error.message })
     }
 })
 
 orderRoute.put('/ref/:id', async (req, res) => {
     const { id } = req.params
-
+    let body = req
+    body.cancel = true
+    body.whoCancel = "Restaurant"
     try {
-        const myorder = await Order.findByIdAndUpdate(id, { cancel: true })
+        const myorder = await Order.findByIdAndUpdate(id, body)
         res.send({ good: true, result: myorder, message: "ok" })
     } catch (error) {
-        res, send({ good: false, message: error.message })
+        res.send({ good: false, message: error.message })
     }
 })
 
