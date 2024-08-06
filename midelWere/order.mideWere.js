@@ -30,8 +30,12 @@ const OrderStepTwo = async (id) => {
             if (myorder.livrorOK) {
                 return
             } else {
-                myorder.serverCancel = true
+                // myorder.serverCancel = true
                 myorder.LivrorShow = false
+                myorder.whoCancel = "srver"
+                myorder.whyCancel = "time out "
+                myorder.complate = false
+                myorder.cancel = true
                 try {
                     await Order.findByIdAndUpdate(id, myorder)
                     console.log("done");
