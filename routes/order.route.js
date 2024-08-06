@@ -107,11 +107,8 @@ orderRoute.put('/done/:id', async (req, res) => {
 
 orderRoute.put('/ref/:id', async (req, res) => {
     const { id } = req.params
-    let body = req
-    body.cancel = true
-    body.whoCancel = "Restaurant"
     try {
-        const myorder = await Order.findByIdAndUpdate(id, body)
+        const myorder = await Order.findByIdAndUpdate(id, { cancel: true, whoCancel: "Restaurant" })
         res.send({ good: true, result: myorder, message: "ok" })
     } catch (error) {
         res.send({ good: false, message: error.message })
