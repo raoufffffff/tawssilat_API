@@ -5,7 +5,7 @@ const OrderStepOne = async (id) => {
     try {
         let myorder = await Order.findById(id)
         setTimeout(async () => {
-            if (myorder.LivrorShow) {
+            if (myorder.LivrorShow || myorder.restaurantOK) {
                 return
             } else {
                 myorder.LivrorShow = true
@@ -27,7 +27,7 @@ const OrderStepTwo = async (id) => {
     try {
         let myorder = await Order.findById(id)
         setTimeout(async () => {
-            if (myorder.livrorOK) {
+            if (myorder.livrorOK || myorder.cancel) {
                 return
             } else {
                 // myorder.serverCancel = true

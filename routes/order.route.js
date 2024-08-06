@@ -1,6 +1,7 @@
 const experss = require('express')
 const Order = require('../models/order.model')
 const { OrderStepOne, OrderStepTwo } = require('../midelWere/order.mideWere')
+const sendNot = require('../midelWere/not/not')
 const orderRoute = experss.Router()
 
 orderRoute.get('/my/:id', async (req, res) => {
@@ -58,6 +59,7 @@ orderRoute.post('/', async (req, res) => {
         const myorder = await Order.create(body)
         res.send({ good: true, result: myorder, message: "ok" })
         console.log(myorder._id);
+        sendNot(body.restaurantid, body.price)
         OrderStepOne(myorder._id)
     } catch (error) {
         res.send({ good: false, message: error.message })
