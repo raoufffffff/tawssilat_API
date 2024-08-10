@@ -1,6 +1,6 @@
 const experss = require('express')
 const Order = require('../models/order.model')
-const { OrderStepOne, OrderStepTwo } = require('../midelWere/order.mideWere')
+const { OrderStepOne } = require('../midelWere/order.mideWere')
 const sendNot = require('../midelWere/not/not')
 const orderRoute = experss.Router()
 
@@ -47,14 +47,8 @@ orderRoute.post('/', async (req, res) => {
     let { body } = req
     body.restaurantOK = false
     body.livrorOK = false
-    body.about = {
-        complate: false,
-        restaurantCancel: false,
-        livrorCancel: false,
-        userCancel: false
-    }
-    body.serverCancel = false
     body.cancel = false
+    body.complate = false
     try {
         const myorder = await Order.create(body)
         res.send({ good: true, result: myorder, message: "ok" })

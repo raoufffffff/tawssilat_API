@@ -5,13 +5,13 @@ const OrderStepOne = async (id) => {
     try {
         let myorder = await Order.findById(id)
         setTimeout(async () => {
-            if (myorder.LivrorShow || myorder.restaurantOK) {
-                return
-            } else {
+            if (!myorder.LivrorShow || !myorder.restaurantOK) {
                 myorder.LivrorShow = true
                 try {
                     await Order.findByIdAndUpdate(id, myorder)
-                    OrderStepTwo(id)
+                        .then(() => {
+                            OrderStepTwo(id)
+                        })
                 } catch (error) {
                     console.error("Error updating orders:", error);
                 }
@@ -27,9 +27,7 @@ const OrderStepTwo = async (id) => {
     try {
         let myorder = await Order.findById(id)
         setTimeout(async () => {
-            if (myorder.livrorOK || myorder.cancel) {
-                return
-            } else {
+            if (!myorder.livrorOK || !myorder.cancel) {
                 // myorder.serverCancel = true
                 myorder.LivrorShow = false
                 myorder.whoCancel = "srver"

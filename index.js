@@ -1,5 +1,5 @@
-const express = require('express')
-const cors = require('cors')
+const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const foodRoute = require('./routes/food.route');
 const snakRoute = require('./routes/snak.route');
@@ -27,10 +27,8 @@ app.get('/', (req, res) => {
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
 
-const MongoDbKey = "mongodb+srv://raouf:rabah@cluster0.ayejlxj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-
 mongoose
-    .connect(MongoDbKey)
+    .connect("mongodb+srv://raouf:rabah@cluster0.ayejlxj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     .then(() => {
         console.log("mriglla")
 
