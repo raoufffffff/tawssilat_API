@@ -27,6 +27,7 @@ const order = new mongoose.Schema({
     complate: Boolean,
     restaurantOK: Boolean,
     livrorTake: Boolean,
+    livrorTakefrom: Boolean,
     livrorOK: Boolean,
     LivrorShow: Boolean,
     cancel: Boolean,

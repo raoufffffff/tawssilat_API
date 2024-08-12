@@ -6,9 +6,8 @@ const OrderStepOne = async (id) => {
         let myorder = await Order.findById(id)
         setTimeout(async () => {
             if (!myorder.LivrorShow || !myorder.restaurantOK) {
-                myorder.LivrorShow = true
                 try {
-                    await Order.findByIdAndUpdate(id, myorder)
+                    await Order.findByIdAndUpdate(myorder._id, { LivrorShow: true })
                         .then(() => {
                             OrderStepTwo(id)
                         })
@@ -16,7 +15,7 @@ const OrderStepOne = async (id) => {
                     console.error("Error updating orders:", error);
                 }
             }
-        }, 360000);
+        }, 63000);
     } catch (error) {
         res, send({ good: false, message: error.message })
     }
@@ -28,20 +27,20 @@ const OrderStepTwo = async (id) => {
         let myorder = await Order.findById(id)
         setTimeout(async () => {
             if (!myorder.livrorOK || !myorder.cancel) {
-                // myorder.serverCancel = true
-                myorder.LivrorShow = false
-                myorder.whoCancel = "srver"
-                myorder.whyCancel = "time out "
-                myorder.complate = false
-                myorder.cancel = true
                 try {
-                    await Order.findByIdAndUpdate(id, myorder)
+                    await Order.findByIdAndUpdate(myorder._id, {
+                        LivrorShow: false,
+                        whoCancel: "srver",
+                        whyCancel: "time out ",
+                        cancel: true,
+                        complate: false
+                    })
                     console.log("done");
                 } catch (error) {
                     console.error("Error updating orders:", error);
                 }
             }
-        }, 360000);
+        }, 63000);
     } catch (e) {
         console.error("Error finding orders:", e);
     }

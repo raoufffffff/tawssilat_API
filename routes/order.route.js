@@ -52,7 +52,6 @@ orderRoute.post('/', async (req, res) => {
     try {
         const myorder = await Order.create(body)
         res.send({ good: true, result: myorder, message: "ok" })
-        console.log(myorder._id);
         sendNot(body.restaurantid, body.price)
         OrderStepOne(myorder._id)
     } catch (error) {
