@@ -9,7 +9,7 @@ const OrderStepOne = async (id) => {
                 try {
                     await Order.findByIdAndUpdate(myorder._id, { LivrorShow: true })
                         .then(() => {
-                            OrderStepTwo(id)
+                            // OrderStepTwo(id)
                         })
                 } catch (error) {
                     console.error("Error updating orders:", error);
