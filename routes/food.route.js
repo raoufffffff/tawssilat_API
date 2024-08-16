@@ -1,5 +1,6 @@
 const express = require('express');
 const Food = require('../models/food.model');
+const Restaurant = require('../models/rest.Model');
 const foodRoute = express.Router();
 
 foodRoute.get('/my/:id', async (req, res) => {
@@ -27,10 +28,12 @@ foodRoute.post('/:id', async (req, res) => {
     const { id } = req.params
     let { body } = req
     body.by = id
-    body.out = false
-    body.newPrice = 0
-    body.orders = 0
     try {
+        let rest = await Restaurant.findById(id)
+        if (!rest.menu.includes(body.type)) {
+            rest.menu.push(body.type);
+            await Restaurant.findByIdAndUpdate(id, { menu: rest.menu });
+        }
         const myfood = await Food.create(body)
         res.send({ good: true, result: myfood, message: 'ok' })
     } catch (error) {

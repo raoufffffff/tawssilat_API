@@ -7,6 +7,7 @@ const restaurantRoute = require('./routes/Restaurant.route');
 const orderRoute = require('./routes/order.route');
 const AuthRest = require('./auth/rest.auth');
 const FeedBackRoute = require('./routes/feedBack.route');
+require('dotenv').config()
 
 const app = express()
 app.use(cors());
@@ -26,9 +27,9 @@ app.get('/', (req, res) => {
 
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
-
+const DB = process.env.MONGOOSE_DB
 mongoose
-    .connect("mongodb+srv://raouf:rabah@cluster0.ayejlxj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+    .connect(DB)
     .then(() => {
         console.log("mriglla")
 
