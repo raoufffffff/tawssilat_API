@@ -1,41 +1,55 @@
 const Restaurant = require('../../models/rest.Model');
 
-const sendNot = async (a, b) => {
+
+
+
+
+const sendNot = async (restaurantId, orderDetails) => {
     try {
-        // Fetch restaurant details
-        const rest = await Restaurant.findById(a);
-        if (!rest) {
+        // Fetch restaurant details by ID
+        const restaurant = await Restaurant.findById(restaurantId);
+        if (!restaurant) {
             throw new Error('Restaurant not found');
         }
 
-        // Prepare the notification payload
-        const notificationPayload = {
-            to: rest.not,
-            title: 'New Order',
-            body: `${b}`
-        };
-
-        // Send the notification
-        const response = await fetch('https://exp.host/--/api/v2/push/send', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(notificationPayload) // Convert body to JSON string
-        });
-
-        // Check for successful response
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Failed to send notification: ${errorText}`);
+        if (!restaurant.not) {
+            throw new Error('Restaurant does not have a push notification token');
         }
 
-        const result = await response.json();
-        console.log('Notification sent successfully:', result);
+        // Create the message payload for FCM
+        const message = {
+            token: restaurant.not, // Push token from the restaurant's database
+            notification: {
+                title: 'New Order',
+                body: `${orderDetails}`,  // Customize the body with order details
+            },
+            // APNs configuration for iOS
+            apns: {
+                payload: {
+                    aps: {
+                        sound: "a.wav", // Use the custom sound for iOS
+                    },
+                },
+            },
+            // Android configuration
+            android: {
+                priority: "high",
+                notification: {
+                    sound: "a.wav",  // Use the custom sound for Android
+                },
+            },
+        };
+
+        // Send the notification via Firebase Admin SDK
+        const response = await admin.messaging().send(message);
+        console.log("Successfully sent message:", response);
+        return { success: true, message: 'Notification sent successfully' };
 
     } catch (error) {
         console.error('Error sending notification:', error.message);
+        return { success: false, message: error.message };
     }
-}
+};
+
 
 module.exports = sendNot;
