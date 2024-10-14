@@ -1,9 +1,6 @@
 const Restaurant = require('../../models/rest.Model');
 const { JWT } = require('google-auth-library');
-
 require('dotenv').config()
-
-
 function getAccessTokenAsync(key) {
     return new Promise(function (resolve, reject) {
         const jwtClient = new JWT(
