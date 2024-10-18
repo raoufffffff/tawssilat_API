@@ -37,15 +37,15 @@ async function sendFCMv1Notification(a, b) {
                 "message": "Testing",
                 "title": "This is an FCM notification message",
                 "body": "{\"title\": \"new order\", \"body\": \"hello\"}",
-                "scopeKey": "@tawssilat/zbi",
-                "experienceId": "@tawssilat/zbi"
+                "scopeKey": "@tawssilatcompany/tawssilat_resturants",
+                "experienceId": "@tawssilatcompany/tawssilat_resturants"
             }
         }
 
     };
 
     const response = await fetch(
-        `https://fcm.googleapis.com/v1/projects/zbii-407e9/messages:send`,
+        `https://fcm.googleapis.com/v1/projects/tawssilat-resturants/messages:send`,
         {
             method: 'POST',
             headers: {
