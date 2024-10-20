@@ -90,13 +90,13 @@ orderRoute.delete('/:id', async (req, res) => {
 // })
 
 
-const aa = async () => {
+const aa = async (a) => {
     await fetch("https://tawssilat-backend-liv.onrender.com/not", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ride: myorder.ride })
+        body: JSON.stringify({ ride: a.ride })
     });
 }
 
@@ -105,7 +105,7 @@ orderRoute.put('/acc/:id', async (req, res) => {
     const { id } = req.params
     try {
         const myorder = await Order.findByIdAndUpdate(id, { restaurantOK: true, LivrorShow: true })
-        aa()
+        aa(myorder)
         res.send({ good: true, result: myorder, message: "ok" })
     } catch (error) {
         res.send({ good: false, message: error.message })
