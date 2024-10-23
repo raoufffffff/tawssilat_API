@@ -7,6 +7,7 @@ const restaurantRoute = require('./routes/Restaurant.route');
 const orderRoute = require('./routes/order.route');
 const AuthRest = require('./auth/rest.auth');
 const FeedBackRoute = require('./routes/feedBack.route');
+const AddsRoute = require('./routes/adds.route');
 
 
 
@@ -19,6 +20,7 @@ app.use('/restaurant', restaurantRoute)
 app.use('/order', orderRoute)
 app.use('/authrest', AuthRest)
 app.use('/feedback', FeedBackRoute)
+app.use('/adds', AddsRoute)
 
 
 app.get('/', (req, res) => {
