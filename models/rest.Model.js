@@ -66,6 +66,10 @@ const restSchema = new mongoose.Schema({
     menu: {
         type: [String], // Specify that menu is an array of strings
         default: [] // Initialize with an empty array
+    },
+    real: {
+        type: String, // Specify that menu is an array of strings
+        default: "" // Initialize with an empty array
     }
 });
 
