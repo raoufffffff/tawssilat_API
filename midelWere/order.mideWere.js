@@ -34,7 +34,7 @@ const OrderStepOne = async (id) => {
                 console.error("Error updating orders or sending notification:", error);
             }
 
-        }, 63000);
+        }, 900000);
 
     } catch (error) {
         console.error("Error in OrderStepOne:", error.message);
@@ -61,7 +61,7 @@ const OrderStepTwo = async (id) => {
                     console.error("Error updating orders:", error);
                 }
             }
-        }, 10000);
+        }, 900000);
     } catch (e) {
         console.error("Error finding orders:", e);
     }
