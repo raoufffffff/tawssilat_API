@@ -3,23 +3,33 @@ const Restaurant = require('../models/rest.Model')
 const AuthRest = express.Router()
 
 AuthRest.post('/', async (req, res) => {
-    const { body } = req
+    const { email, password } = req.body;
+
     try {
-        const rest = await Restaurant.findOne({ email: body.email })
-        console.log(rest);
-        if (!rest) {
-            res.send({ good: false, email: false })
-            return
+        // Find all restaurants
+        const restaurants = await Restaurant.find();
+
+        // Normalize the email to match, ignoring case and whitespace
+        const matchedRestaurant = restaurants.find(
+            restaurant => restaurant.email.replace(/\s+/g, '').toLowerCase() === email.replace(/\s+/g, '').toLowerCase()
+        );
+
+        if (!matchedRestaurant) {
+            res.send({ good: false, email: false });
+            return;
         }
-        if (rest.password === body.password) {
-            res.send({ good: true, result: rest })
-            return
+
+        // Compare password (if stored as plain text, otherwise use bcrypt here)
+        if (matchedRestaurant.password.replace(/\s+/g, '').toLowerCase() === password.replace(/\s+/g, '').toLowerCase()) {
+            res.send({ good: true, result: matchedRestaurant });
+        } else {
+            res.send({ good: false, password: false });
         }
-        res.send({ good: false, password: false })
 
     } catch (error) {
-        res.send({ good: false, message: error.message })
+        res.status(500).send({ good: false, message: error.message });
     }
-})
+});
+
 
 module.exports = AuthRest

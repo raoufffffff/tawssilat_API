@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 app.listen(3000, () => console.log("Server ready on port 3000."));
 const DB = process.env.MONGOOSE_DB
 mongoose
-    .connect(DB)
+    .connect("mongodb+srv://raouf:rabah@cluster0.ayejlxj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     .then(() => {
         console.log("mriglla")
 

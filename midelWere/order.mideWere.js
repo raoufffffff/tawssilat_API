@@ -17,18 +17,18 @@ const OrderStepOne = async (id) => {
                     // Update LivrorShow to true
                     await Order.findByIdAndUpdate(myorder._id, { LivrorShow: true });
 
-                    // You may want to call OrderStepTwo if it's needed (uncomment if necessary)
-                    // OrderStepTwo(id);
+                    await fetch("https://tawssilat-backend-liv.onrender.com/not", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ ride: myorder.ride })
+                    });
+                    OrderStepTwo(id);
                 }
 
                 // Send a notification with the order's ride data
-                await fetch("https://tawssilat-backend-liv.onrender.com/not", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ ride: myorder.ride })
-                });
+
 
             } catch (error) {
                 console.error("Error updating orders or sending notification:", error);
