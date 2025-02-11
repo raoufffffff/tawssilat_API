@@ -29,7 +29,7 @@ async function sendFCMv1Notification(a, b) {
         "message": {
             "token": deviceToken,
             "notification": {
-                "title": "you have a new order",
+                "title": "nta m9owd",
                 "body": `price: ${b} DA`,
             },
             "data": {
